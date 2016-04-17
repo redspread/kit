@@ -8,12 +8,12 @@ function init() {
         DIR=$1
     fi
 
-    if [ -d "${S_DIR}" ]; then
-        echo "\"${S_DIR}\" already exists"
+    if [ -d "${DIR}" ]; then
+        echo "\"${DIR}\" already exists"
         exit 1
     fi
 
     mkdir -p ${DIR}
-    git init --bare ${DIR}/git
+    git init --bare --quiet ${DIR}/git
     echo "Created empty Spread repository at ${DIR}"
 }
