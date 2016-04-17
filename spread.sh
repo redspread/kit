@@ -1,6 +1,8 @@
 #!/bin/bash
 
 # load commands
-source ./cmd/*.sh
+for file in ./cmd/*.sh; do
+    source $file
+done
 
 eval $@
