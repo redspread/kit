@@ -1,7 +1,5 @@
 #!/bin/bash
 
-S_DIR=".spread"
-
 function init() {
     DIR=$(pwd)/${S_DIR}
     if [ -n "$1" ]; then
