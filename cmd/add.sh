@@ -1,6 +1,9 @@
 #!/bin/bash
 
 function addCommand() {
+    # ensure git is available
+    requireGit
+
     OBJECT=$1
 
     # set namespace to default if unspecified
@@ -16,7 +19,10 @@ function addCommand() {
         exit $?
     fi
 
+    # insert JSON representation of object into Git
+    # Keep the hash it is stored under in $OBJID
     OBJID=$(echo "${JSON}" | ${GIT} hash-object -w --stdin)
 
+    # Stage JSON into index using $OBJID
     ${GIT} update-index --add --cacheinfo 100644 ${OBJID} "${NAMESPACE}/${OBJECT}"
 }

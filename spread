@@ -7,14 +7,15 @@ S_DIR=".spread"
 SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # import global functions
-source "project.sh"
+source "${SRC_DIR}/project.sh"
+source "${SRC_DIR}/git.sh"
 
 # detect spread project
 detectSpread $(pwd)
 
-# Setup Git to use spread repo
-GIT_DIR=${SPREAD}/git
-GIT="git --git-dir=${GIT_DIR}"
+if [ ! -z "$SPREAD" ]; then
+    setupGit
+fi
 
 # load commands
 for file in ${SRC_DIR}/cmd/*.sh; do
