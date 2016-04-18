@@ -1,4 +1,4 @@
-#!/bin/bash
+CmdNames+=('init')
 
 function initCommand() {
     DIR=$(pwd)/${S_DIR}

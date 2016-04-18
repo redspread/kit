@@ -17,10 +17,18 @@ if [ ! -z "$SPREAD" ]; then
     setupGit
 fi
 
+CmdNames=()
 # load commands
 for file in ${SRC_DIR}/cmd/*.sh; do
     source $file
 done
+
+# if no params display available commands
+if [ "$#" -eq 0 ]; then
+    echo "No command. Try from:"
+    printf "* %s\n" "${CmdNames[@]}"
+    exit 1
+fi
 
 params=("$@")
 eval "${1}Command ${params[@]:1}"

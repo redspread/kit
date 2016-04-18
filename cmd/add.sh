@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Register name
+CmdNames+=('add')
+
 function addCommand() {
     # ensure git is available
     requireGit
