@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function add() {
+function addCommand() {
     OBJECT=$1
 
     # set namespace to default if unspecified

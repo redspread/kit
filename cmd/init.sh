@@ -1,6 +1,6 @@
 #!/bin/bash
 
-function init() {
+function initCommand() {
     DIR=$(pwd)/${S_DIR}
     if [ -n "$1" ]; then
         DIR=$1
