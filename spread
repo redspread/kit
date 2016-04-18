@@ -19,6 +19,7 @@ function detectSpread() {
 
     # if "/" then stop
     if [ ${DIR} == ${PARENT} ]; then
+        unset SPREAD
         return
     fi
 
@@ -27,6 +28,10 @@ function detectSpread() {
 
 # detect spread project
 detectSpread $(pwd)
+
+# Setup Git to use spread repo
+GIT_DIR=${SPREAD}/git
+GIT="git --git-dir=${GIT_DIR}"
 
 # load commands
 for file in ${SRC_DIR}/cmd/*.sh; do

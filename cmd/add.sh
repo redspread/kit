@@ -16,7 +16,7 @@ function add() {
         exit $?
     fi
 
-    OBJID=$(echo ${JSON} | git hash-object -w --stdin)
+    OBJID=$(echo "${JSON}" | ${GIT} hash-object -w --stdin)
 
-    git update-index --add --cacheinfo 100644 ${OBJID} "${NAMESPACE}/${OBJECT}"
+    ${GIT} update-index --add --cacheinfo 100644 ${OBJID} "${NAMESPACE}/${OBJECT}"
 }
