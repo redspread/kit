@@ -1,18 +1,15 @@
-require 'rubygems'
-require 'commander/import'
+class AddCmd
+    def name
+        "add"
+    end
 
-command :add do |c|
-    c.syntax = 'kit add [options]'
-    c.summary = 'stages object to Git index'
-    c.description = 'Add allows Kubernetes objects to be staged into the Git index'
-    c.example 'stage service to index', 'kit add services/kubernetes'
-    c.option '-ns', '--namespace STRING', String, 'namespace to query Kubernete with'
-    c.action do |args, options|
-        options.default :namespace => 'default'
-
+    def cmd(args, opts)
+        namespace = "default"
         if args.length < 1
             puts "A resource must be specified"
             exit 1
+        elsif args.length == 2
+            namespace = args[1]
         end
 
         # ensure git is available
@@ -20,10 +17,10 @@ command :add do |c|
 
         object = args[0]
 
-        puts "Retrieving #{object} (namespace=#{options.namespace})"
-        out = `kubectl --namespace #{options.namespace} get #{object} --export -o json`
+        puts "Retrieving #{object} (namespace=#{namespace})"
+        out = `kubectl --namespace #{namespace} get #{object} --export -o json`
         json = out.gsub(/\s+/, "")
-        if $?.to_i != 0
+        if !$?.success?
             puts "failed to retrieve"
             exit $?.to_i
         end
@@ -33,6 +30,10 @@ command :add do |c|
         objid = `printf "#{json}" | #{Git} hash-object -w --stdin`
 
         # Stage JSON into index using objid
-        puts `#{Git} update-index --add --cacheinfo 100644 "#{objid}" #{options.namespace}/#{object}`
+        puts `#{Git} update-index --add --cacheinfo 100644 "#{objid}" #{namespace}/#{object}`
     end
 end
+
+# add to commands
+cmd = AddCmd.new
+Commands[cmd.name] = cmd.method(:cmd)

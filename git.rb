@@ -3,6 +3,7 @@ def setupGit(spreadDir=Spread)
     # GitDir is the directory that the bare Git repo is stored in
     gitDir = "#{spreadDir}/git"
     if File.directory?(gitDir)
+        ENV["GIT_WORK_TREE"] = "./.spread"
         return "git --git-dir=#{gitDir}"
     end
     return false
