@@ -6,6 +6,7 @@ class CommitCmd
     def cmd(args, opts)
         # ensure git is available
         requireGit
+        setupWorkdir
 
         argText = args.join('" "')
         puts `#{Git} commit \"#{argText}\"`

@@ -6,9 +6,10 @@ class PullCmd
     def cmd(args, opts)
         # ensure git is available
         requireGit
+        setupWorkdir
 
         argText = args.join('" "')
-        puts `#{Git} pull \"#{argText}\"`
+        puts `#{Git} pull #{argText}`
     end
 end
 

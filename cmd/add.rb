@@ -18,8 +18,7 @@ class AddCmd
         object = args[0]
 
         puts "Retrieving #{object} (namespace=#{namespace})"
-        out = `kubectl --namespace #{namespace} get #{object} --export -o json`
-        json = out.gsub(/\s+/, "")
+        json = `kubectl --namespace #{namespace} get #{object} --export -o json`
         if !$?.success?
             puts "failed to retrieve"
             exit $?.to_i

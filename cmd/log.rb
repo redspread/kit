@@ -8,7 +8,7 @@ class LogCmd
         requireGit
 
         argText = args.join('" "')
-        puts `#{Git} log \"#{argText}\"`
+        puts `#{Git} log #{argText}`
     end
 end
 

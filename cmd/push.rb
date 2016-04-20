@@ -6,9 +6,10 @@ class PushCmd
     def cmd(args, opts)
         # ensure git is available
         requireGit
+        setupWorkdir
 
         argText = args.join('" "')
-        puts `#{Git} push \"#{argText}\"`
+        puts `#{Git} push #{argText}`
     end
 end
 
