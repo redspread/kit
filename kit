@@ -24,6 +24,16 @@ Dir[File.dirname(__FILE__) + '/cmd/*.rb'].each{ |file|
     require file
 }
 
+# if no subcommand, print help screen
+if ARGV.length < 1
+    puts "kit - Git for Kubernetes prototype"
+    puts "Try one of these commands:"
+    for cmdName in Commands.keys
+        puts "- #{cmdName}"
+    end
+    exit 1
+end
+
 cmd = ARGV[0]
 args = ARGV[1..-1]
 Commands[cmd].call(args, nil)
