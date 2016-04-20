@@ -1,34 +1,29 @@
-#!/bin/bash
+#!/usr/bin/env ruby -rubygems
 
 # spread repo directory name
-S_DIR=".spread"
+SpreadDir = ".spread"
 
-# Directory script is in
-SRC_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# kit helpers
+require_relative './project.rb'
+require_relative './git.rb'
 
-# import global functions
-source "${SRC_DIR}/project.sh"
-source "${SRC_DIR}/git.sh"
+# check if working directory is inside spread project
+spread = detectSpread Dir.pwd
+if spread
+    Spread = spread
+    # defines Git function
+    git = setupGit Spread
+    if git
+        Git = git
+    end
+end
 
-# detect spread project
-detectSpread $(pwd)
-
-if [ ! -z "$SPREAD" ]; then
-    setupGit
-fi
-
-CmdNames=()
 # load commands
-for file in ${SRC_DIR}/cmd/*.sh; do
-    source $file
-done
+Commands = {}
+Dir[File.dirname(__FILE__) + '/cmd/*.rb'].each{ |file|
+    require file
+}
 
-# if no params display available commands
-if [ "$#" -eq 0 ]; then
-    echo "No command. Try from:"
-    printf "* %s\n" "${CmdNames[@]}"
-    exit 1
-fi
-
-params=("$@")
-eval "${1}Command ${params[@]:1}"
+cmd = ARGV[0]
+args = ARGV[1..-1]
+Commands[cmd].call(args, nil)
