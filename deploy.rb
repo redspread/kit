@@ -1,10 +1,12 @@
+require 'open3'
+
 # deploy attempts to recreate the given state on the connected cluster. It does this by first trying to create the object.A
 # If 'replace' is true, then it will try to replace the object if it already exits in the cluster.
 # false is returned if the operation is successful
-def deploy(data, replace=false, force=false)                                   ``
+def deploy(data, replace=false, force=false)
     err = runWithData("kubectl create -f -", data)
-    if !$?.success?
-        if existsErr(err) && replace
+    if err
+        if existsErr?(err) && replace
             return replace(data, force)
         end
         return "could not create object: #{err}"
@@ -31,15 +33,14 @@ end
 
 # existsErr? returns true when the provided error is because the object already exists.
 def existsErr?(err)
-    err.end_with?("already exists")
+    err.end_with?("already exists\n")
 end
 
 # runWithData runs command specified in 'cmd' and writes 'data' to it's STDIN
 # It returns false if there is no error.
 def runWithData(cmd, data)
-    err = `printf "#{data}" | #{cmd}`
-    puts "error: #{err}"
-    if !$?.success?
+    err, status = Open3.capture2e(cmd, :stdin_data => data)
+    if status != 0
         return err
     end
     return false

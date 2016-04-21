@@ -21,3 +21,23 @@ end
 def setupWorkdir
     ENV["GIT_WORK_TREE"] = "./.spread"
 end
+
+def gitListFiles(ref)
+    objs = `#{Git} ls-tree --name-only -r #{ref}`
+    if !$?.success?
+        puts "error: #{objs}"
+        return false
+    end
+
+    return objs
+end
+
+def gitGetFile(ref, path)
+    data = `#{Git} show #{ref}:#{path}`
+    if !$?.success?
+        puts "error: #{data}"
+        return false
+    end
+
+    return data
+end

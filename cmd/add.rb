@@ -26,7 +26,7 @@ class AddCmd
 
         # insert JSON representation of object into Git
         # Keep the hash it is stored under in objid
-        objid = `printf "#{json}" | #{Git} hash-object -w --stdin`
+        objid = `printf '#{json}' | #{Git} hash-object -w --stdin`
 
         # Stage JSON into index using objid
         puts `#{Git} update-index --add --cacheinfo 100644 "#{objid}" #{namespace}/#{object}`
