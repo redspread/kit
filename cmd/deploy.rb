@@ -8,7 +8,7 @@ class DeployCmd
         if args.length < 1
             puts "a reference must be specified"
             exit 1
-        elsif args.length == 2 && args[0] == "-f"
+        elsif args.length == 2 && args[1] == "-f"
             force = true
         elsif args.length == 0
             puts "kit deploy <ref> [-f]"

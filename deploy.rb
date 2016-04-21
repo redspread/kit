@@ -20,7 +20,7 @@ end
 def replace(data, force=false)
     args = ""
     if force
-        args += "--force" 
+        args += "--force --cascade"
     end
 
     cmd = "kubectl replace -f - #{args}"
