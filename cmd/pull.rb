@@ -9,7 +9,7 @@ class PullCmd
         setupWorkdir
 
         argText = args.join('" "')
-        puts `#{Git} pull #{argText}`
+        puts `#{Git} pull \"#{argText}\"`
     end
 end
 

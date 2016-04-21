@@ -9,7 +9,7 @@ class PushCmd
         setupWorkdir
 
         argText = args.join('" "')
-        puts `#{Git} push #{argText}`
+        puts `#{Git} push \"#{argText}\"`
     end
 end
 
