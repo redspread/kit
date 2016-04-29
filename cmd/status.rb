@@ -10,6 +10,9 @@ class StatusCmd
         end
 
         puts "Currently in Spread repo '#{Spread}'"
+
+        puts "Changes:"
+        puts `#{Git} diff --summary --cached`
     end
 end
 
