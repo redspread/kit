@@ -4,6 +4,8 @@ class DeployCmd
     end
 
     def cmd(args, opts)
+        requireGit
+
         force = false
         if args.length < 1
             puts "a reference must be specified"
