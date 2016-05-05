@@ -25,8 +25,7 @@ Dir[File.dirname(__FILE__) + '/cmd/*.rb'].each{ |file|
     require file
 }
 
-# if no subcommand, print help screen
-if ARGV.length < 1
+def help
     puts "kit - Git for Kubernetes prototype"
     puts "Try one of these commands:"
     for cmdName in Commands.keys
@@ -35,6 +34,15 @@ if ARGV.length < 1
     exit 1
 end
 
+# if no subcommand, print help screen
+if ARGV.length < 1
+    help
+end
 cmd = ARGV[0]
 args = ARGV[1..-1]
-Commands[cmd].call(args, nil)
+exec = Commands[cmd]
+if exec == nil
+    puts "No command '#{cmd}'"
+    help
+end
+exec.call(args, nil)
