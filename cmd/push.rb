@@ -9,7 +9,8 @@ class PushCmd
         setupWorkdir
 
         argText = args.join('" "')
-        puts `#{Git} push \"#{argText}\"`
+        out = `#{Git} push \"#{argText}\" 2>&1`
+        puts out.gsub! 'github.com', 'redspread.com'
     end
 end
 
