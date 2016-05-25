@@ -9,7 +9,8 @@ class CommitCmd
         setupWorkdir
 
         argText = args.join('" "')
-        puts `#{Git} commit \"#{argText}\"`
+        out = `#{Git} commit \"#{argText}\"`
+        puts out.gsub! 'file', 'object'
     end
 end
 
