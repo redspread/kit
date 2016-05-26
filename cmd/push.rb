@@ -10,7 +10,8 @@ class PushCmd
 
         argText = args.join('" "')
         out = `#{Git} push \"#{argText}\" 2>&1`
-        puts out.gsub! 'github.com', 'redspread.com'
+        out = out.gsub! 'github.com', 'redspread.com'
+        puts out.gsub! '.git', '.spread'
     end
 end
 
